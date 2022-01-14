@@ -1,0 +1,94 @@
+#include <LiquidCrystal.h>
+#include "msp.h"
+#define RS 35 //6.7
+#define EN 34 //2.3
+#define D4 39 //2.6
+#define D5 38 //2.4
+#define D6 37 //5.6
+#define D7 36 //6.6
+LiquidCrystal lcd(RS, EN, D4, D5, D6, D7);
+
+#define SW1 BIT1
+#define SW2 BIT4
+#define DELAY 300 // used for SW switch debouncer using 300 clock cycles
+
+int i;
+int iScore;
+int iTime;
+
+void setup() {
+
+
+    P1->DIR &= ~SW1;   // Set P1.1 as input
+    P1->REN |= BIT1;   // turn on P1.1 pull resistor
+    P1->OUT |= BIT1;   // configure P1.1 resistor as pull-up
+
+    P1->DIR &= ~SW2;   // Set P1.4 as input
+    P1->REN |= BIT4;   // turn on P1.4 pull resistor
+    P1->OUT |= BIT4;   // configure P1.4 resistor as pull-up
+
+
+    iScore = 0;
+    String score;
+    score = String(iScore);
+
+    iTime = 120;
+    String time;
+    time = String(iTime);
+
+  // put your setup code here, to run once:
+    lcd.begin(16, 2);//LCD order
+    lcd.setCursor(0,0);//Setting the cursor on LCD
+    lcd.print("SCORE: ");//prints on LCD
+    lcd.print(score);
+    lcd.setCursor(0,1);//Setting the cursor on LCD
+    lcd.print("TIME:");//prints on LCD
+    lcd.print(time);
+    delay(1000);//delay of 1 second
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly: 
+
+    while(iTime >= 0)
+    {
+        // delay for switch debouncing
+        //for (i = 0; i < DELAY; i++){}
+
+        // IF SW1 is pressed: Reset
+        if ((P1->IN & SW1) == 0x00)
+        {
+            iTime = 120;
+            iScore = 0;
+        }
+
+        // If SW2 is pressed: Add 30 points
+        //For testing purposes
+        if ((P1->IN & SW2) == 0x00)
+        {
+            iScore = iScore + 30;
+        }
+
+        String score;
+        score = String(iScore);
+
+
+        String time;
+        time = String(iTime);
+
+        // put your setup code here, to run once:
+        lcd.begin(16, 2);//LCD order
+        lcd.setCursor(0,0);//Setting the cursor on LCD
+        lcd.print("SCORE: ");//prints on LCD
+        lcd.print(score);
+        lcd.setCursor(0,1);//Setting the cursor on LCD
+        lcd.print("TIME:");//prints on LCD
+        lcd.print(time);
+        delay(1000);//delay of 1 second
+
+        iTime = iTime - 1;
+    }
+
+  
+}
