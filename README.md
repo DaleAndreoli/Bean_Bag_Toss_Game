@@ -2,7 +2,7 @@ Dale Andreoli
 
 and17081@byui.edu
 
-Team Project with Becket Fawcett and Ben Stradling
+Team project with Becket Fawcett and Ben Stradling
 
 # Bean Bag Toss Game
 
