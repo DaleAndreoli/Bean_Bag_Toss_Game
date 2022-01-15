@@ -43,6 +43,10 @@ Sensor Diagram
 
 <img src="Documentation/tcrt5000-diagram.jpg" alt="gameplay" width="500"/>
 
+## Code
+
+[Click here to view](Project_Files/ECEN_361_Final_project_2020_12_07.c)
+
 ## Things we learned
 
 * Timing systems (different methods. Ie onboard clk, delays)
